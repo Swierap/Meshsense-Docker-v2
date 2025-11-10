@@ -28,7 +28,7 @@ WORKDIR /app/api
 RUN npm install --omit=dev
 
 WORKDIR /app/ui
-RUN npm install --omit=dev
+RUN npm install
 RUN npm run build
 
 # --- Stage 2: Runtime (Lekkie środowisko uruchomieniowe) ---
