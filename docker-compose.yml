@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  meshsense:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: meshsense
+    ports:
+      - "5920:5920"  # API port
+    environment:
+      #- ADDRESS=192.168.9.231
+      - PORT=5920
+      - HOST=0.0.0.0
+      - ACCESS_KEY=changeme
+      - DISPLAY=:99
+    cap_add:
+      - NET_ADMIN
+    #devices:
+    #  - /dev/ttyAMA0:/dev/ttyAMA0
+    #  - /dev/serial/by-id:/dev/serial/by-id
+    volumes:
+      - meshsense-data:/home/mesh/.meshsense
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:5920/health"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    user: "1000:1000"
+    labels:
+      - "project=meshsense"
+
+volumes:
+  meshsense-data:
